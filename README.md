@@ -2,6 +2,8 @@
 
 Simple React application that display some information about an authenticated Spotify user.
 
+![Preview image](public/images/preview.png)
+
 ## Getting started
 
 ### Prerequisites
