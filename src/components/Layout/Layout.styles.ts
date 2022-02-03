@@ -33,5 +33,4 @@ export const Content = styled.section`
   align-items: center;
   flex: 1;
   flex-direction: column;
-  margin-bottom: 2.5rem;
 `;

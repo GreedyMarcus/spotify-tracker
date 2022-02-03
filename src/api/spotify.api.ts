@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as T from "./spotify.api.types";
 
 const ACCESS_TOKEN_STORAGE_KEY = "spotify-access-token";
 
@@ -17,13 +18,14 @@ export const removeAccessToken = () => {
   localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
 };
 
-type RequestAccessTokenResponse = {
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
+export const requestAccessToken = async (code: string) => {
+  const response = await axios.post<T.RequestAccessTokenResponse>("/api/token", { code });
+  return response.data;
 };
 
-export const requestAccessToken = async (code: string) => {
-  const response = await axios.post<RequestAccessTokenResponse>("/api/token", { code });
+export const getProfile = async (accessToken: string) => {
+  const response = await axios.get<T.GetProfileResponse>("/api/profile", {
+    headers: { Authorization: accessToken }
+  });
   return response.data;
 };
