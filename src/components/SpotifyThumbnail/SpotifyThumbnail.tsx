@@ -13,8 +13,8 @@ export const SpotifyThumbnail = ({ name, image, externalUrl, type }: Props) => {
       <S.Content>
         {image && (
           <S.ContentImage
-            width={130}
-            height={130}
+            width={140}
+            height={140}
             src={image}
             alt={`Thumbnail image of the ${name} ${type}`}
           />

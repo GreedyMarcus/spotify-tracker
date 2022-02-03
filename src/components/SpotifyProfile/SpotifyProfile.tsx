@@ -14,8 +14,8 @@ export const SpotifyProfile = ({ profile, artists, tracks }: Props) => {
       <S.Section>
         {profile.image && (
           <S.ContentImage
-            width={300}
-            height={300}
+            width={320}
+            height={320}
             src={profile.image}
             alt={`Profile picture of ${profile.name}`}
           />

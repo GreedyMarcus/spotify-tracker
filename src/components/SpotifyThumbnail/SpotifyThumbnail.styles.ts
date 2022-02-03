@@ -13,7 +13,7 @@ export const Text = styled.p`
   font-weight: 500;
   letter-spacing: 1px;
   text-align: center;
-  max-width: 200px;
+  max-width: 140px;
 `;
 
 export const Content = styled.div`

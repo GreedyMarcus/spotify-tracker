@@ -4,6 +4,7 @@ import Image from "next/image";
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-gap: 4rem;
   align-items: center;
   width: 100%;
 `;
@@ -42,7 +43,7 @@ export const Section = styled.div`
 export const TopContent = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 2rem;
+  grid-gap: 4rem;
   margin-top: 1.25rem;
   margin-bottom: 1rem;
   width: 100%;
