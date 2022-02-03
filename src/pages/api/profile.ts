@@ -32,12 +32,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         followers: profile.body.followers?.total ?? 0,
         image: profile.body.images?.length ? profile.body.images[0].url : null
       },
-      artists: artists.body.items.map(({ id, name, images }) => ({
+      artists: artists.body.items.map(({ id, name, images, external_urls }) => ({
         id,
         name,
-        image: images.length ? images[0].url : null
+        image: images.length ? images[0].url : null,
+        externalUrl: external_urls.spotify
       })),
-      tracks: tracks.body.items.map(({ id, name, duration_ms, album }) => ({
+      tracks: tracks.body.items.map(({ id, name, duration_ms, album, external_urls }) => ({
         id,
         name,
         duration: duration_ms / 1000,
@@ -45,7 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           id: album.id,
           name: album.name,
           image: album.images.length ? album.images[0].url : null
-        }
+        },
+        externalUrl: external_urls.spotify
       }))
     });
   } catch (err) {

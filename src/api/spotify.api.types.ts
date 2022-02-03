@@ -21,6 +21,7 @@ export type Artist = {
   id: string;
   name: string;
   image: string | null;
+  externalUrl: string;
 };
 
 export type Track = {
@@ -28,6 +29,7 @@ export type Track = {
   name: string;
   duration: number;
   album: Album;
+  externalUrl: string;
 };
 
 type Album = {
