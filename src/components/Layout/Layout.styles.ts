@@ -28,8 +28,10 @@ export const HeaderTitle = styled.h1`
 `;
 
 export const Content = styled.section`
-  flex: 1;
   display: flex;
+  justify-content: center;
   align-items: center;
+  flex: 1;
+  flex-direction: column;
   margin-bottom: 2.5rem;
 `;

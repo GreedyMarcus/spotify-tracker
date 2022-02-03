@@ -4,11 +4,12 @@ export const Link = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 50%;
+  border-radius: 1.5rem;
   background-color: ${({ theme }) => theme.colors.primary.main};
   box-shadow: ${({ theme }) => theme.elevation[0]};
-  padding: 5rem 1.5rem;
+  padding: 0.5rem 1rem;
   color: #fff;
+  width: fit-content;
   font-family: "Carter One";
   font-size: 2rem;
   text-decoration: none;
