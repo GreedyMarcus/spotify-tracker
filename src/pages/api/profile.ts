@@ -16,13 +16,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     redirectUri: process.env.SPOTIFY_REDIRECT_URI
   });
 
-  spotifyApi.setAccessToken(req.headers.authorization ?? "");
-
-  const myProfile = spotifyApi.getMe();
-  const myTopArtists = spotifyApi.getMyTopArtists({ limit: 3 });
-  const myTopTracks = spotifyApi.getMyTopTracks({ limit: 3 });
-
   try {
+    spotifyApi.setAccessToken(req.headers.authorization ?? "");
+
+    const myProfile = spotifyApi.getMe();
+    const myTopArtists = spotifyApi.getMyTopArtists({ limit: 3 });
+    const myTopTracks = spotifyApi.getMyTopTracks({ limit: 3 });
+
     const [profile, artists, tracks] = await Promise.all([myProfile, myTopArtists, myTopTracks]);
 
     res.json({
