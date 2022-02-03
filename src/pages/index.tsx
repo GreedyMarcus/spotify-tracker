@@ -1,12 +1,17 @@
 import Head from "next/head";
+import { Layout } from "@components/Layout";
 
 export default function Index() {
+  const title = "Spotify Tracker";
+
   return (
     <>
       <Head>
-        <title>Spotify Tracker</title>
+        <title>{title}</title>
       </Head>
-      <h1>Spotify Tracker</h1>
+      <Layout title={title}>
+        <h1>content</h1>
+      </Layout>
     </>
   );
 }
