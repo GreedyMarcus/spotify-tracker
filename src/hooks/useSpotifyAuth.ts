@@ -78,6 +78,7 @@ export const useSpotifyAuth = (spotifyCode: string | null) => {
         })
         .catch(() => {
           setError("Oops! Something went wrong.");
+          setProfileData(null);
           setAuthCredentials(null);
           SpotifyApi.removeAuthCredentials();
         })

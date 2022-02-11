@@ -1,6 +1,6 @@
 # Spotify Tracker
 
-Simple Next.js application that display some information about an authenticated Spotify user.
+Simple Next.js application that displays some information about an authenticated Spotify user.
 
 ![Preview image](public/images/preview.png)
 
