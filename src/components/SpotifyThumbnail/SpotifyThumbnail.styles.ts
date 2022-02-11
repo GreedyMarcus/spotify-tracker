@@ -2,7 +2,8 @@ import styled from "styled-components";
 import Image from "next/image";
 
 export const ContentImage = styled(Image)`
-  border-radius: 50%;
+  border: 2px solid ${({ theme }) => theme.colors.common.white} !important;
+  border-radius: 8px;
 `;
 
 export const Text = styled.p`

@@ -10,6 +10,7 @@ export const Container = styled.div`
 `;
 
 export const ContentImage = styled(Image)`
+  border: 2px solid ${({ theme }) => theme.colors.common.white} !important;
   border-radius: 50%;
 `;
 

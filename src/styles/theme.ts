@@ -2,12 +2,15 @@ import { DefaultTheme } from "styled-components";
 
 export const theme: Readonly<DefaultTheme> = {
   colors: {
-    primary: {
-      main: "#1bb954",
-      light: "#1dc95c"
+    common: {
+      black: "#141619",
+      white: "#fff",
+      text: "#eaeaea"
     },
-    dark: {
-      main: "#2e3d49"
+    primary: {
+      main: "#1db954",
+      light: "#1ed760",
+      dark: "#1aa34a"
     }
   },
   elevation: {

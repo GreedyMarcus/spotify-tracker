@@ -21,10 +21,11 @@ export const Link = styled.a`
   :hover {
     background-color: ${({ theme }) => theme.colors.primary.light};
     box-shadow: none;
-    filter: drop-shadow(0 0 0.75rem ${({ theme }) => theme.colors.dark.main});
+    filter: drop-shadow(0 0 0.75rem ${({ theme }) => theme.colors.primary.dark});
   }
 
   :active {
-    filter: drop-shadow(0 0 0.25rem ${({ theme }) => theme.colors.dark.main});
+    background-color: ${({ theme }) => theme.colors.primary.dark};
+    filter: drop-shadow(0 0 0.25rem ${({ theme }) => theme.colors.primary.dark});
   }
 `;

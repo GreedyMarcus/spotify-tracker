@@ -1,12 +1,15 @@
 import "styled-components";
 
 interface Colors {
+  common: {
+    black: string;
+    white: string;
+    text: string;
+  };
   primary: {
     main: string;
     light: string;
-  };
-  dark: {
-    main: string;
+    dark: string;
   };
 }
 
