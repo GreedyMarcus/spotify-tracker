@@ -8,16 +8,16 @@ import { SpotifyProfile } from "@components/SpotifyProfile";
 export default function Index() {
   const code = useSpotifyCode();
   const isBrowser = useIsBroswer();
-  const { authorized, data, loading, error } = useSpotifyAuth(code);
+  const { authorized, profileData, loading, error } = useSpotifyAuth(code);
 
   if (!isBrowser) return null;
 
   return (
     <Layout>
       {!loading && !authorized && <AuthorizeLink />}
-      {!loading && data && <SpotifyProfile {...data} />}
+      {!loading && profileData && <SpotifyProfile {...profileData} />}
       {loading && <h1>Loading...</h1>}
-      {error && <h1>Oops! Something went wrong.</h1>}
+      {error && <h1>{error}</h1>}
     </Layout>
   );
 }

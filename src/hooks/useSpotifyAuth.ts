@@ -1,57 +1,96 @@
 import { useEffect, useState } from "react";
-import { GetProfileResponse } from "@api/spotify.api.types";
+import { ProfileResponse } from "@api/spotify.api.types";
 import * as SpotifyApi from "@api/spotify.api";
 
 /**
  * Custom hook that handles the Spotify authentication flow.
  */
 export const useSpotifyAuth = (spotifyCode: string | null) => {
-  const [accessToken, setAccessToken] = useState<string | null>(SpotifyApi.loadAccessToken());
-  const [data, setData] = useState<GetProfileResponse | null>(null);
+  const [authCredentials, setAuthCredentials] = useState(SpotifyApi.loadAuthCredentials());
+  const [profileData, setProfileData] = useState<ProfileResponse | null>(null);
+  const [refreshRequired, setRefreshRequired] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (accessToken || !spotifyCode) return;
+    if (authCredentials?.accessToken || !spotifyCode) {
+      return;
+    }
 
     setLoading(true);
 
-    (async () => {
-      try {
-        const { accessToken } = await SpotifyApi.requestAccessToken(spotifyCode);
+    SpotifyApi.login(spotifyCode)
+      .then(({ accessToken, refreshToken, expiresIn }) => {
+        const credentials = {
+          accessToken,
+          refreshToken,
+          expiresAt: new Date().getTime() + expiresIn * 1000
+        };
 
-        setAccessToken(accessToken);
-        SpotifyApi.saveAccessToken(accessToken);
-      } catch (err) {
-        setError(true);
-      } finally {
+        setAuthCredentials(credentials);
+        SpotifyApi.saveAuthCredentials(credentials);
+      })
+      .catch(() => {
+        setError("Oops! Couldn't login to your account. Please try again.");
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    })();
-  }, [accessToken, spotifyCode]);
+      });
+  }, [authCredentials, spotifyCode]);
 
   useEffect(() => {
-    if (!accessToken) return;
+    if (!authCredentials?.accessToken) {
+      return;
+    }
 
     setLoading(true);
 
-    (async () => {
-      try {
-        const data = await SpotifyApi.getProfile(accessToken);
-        setData(data);
-      } catch (err) {
-        setError(true);
-        setAccessToken(null);
-        SpotifyApi.removeAccessToken();
-      } finally {
+    if (authCredentials?.expiresAt <= new Date().getTime()) {
+      setRefreshRequired(true);
+      return;
+    }
+
+    SpotifyApi.getProfile(authCredentials.accessToken)
+      .then((profile) => {
+        setProfileData(profile);
+      })
+      .catch(() => {
+        setError("Oops! Couldn't load your profile. Please authorize yourself again.");
+        setAuthCredentials(null);
+        SpotifyApi.removeAuthCredentials();
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    })();
-  }, [accessToken]);
+      });
+  }, [authCredentials]);
+
+  useEffect(() => {
+    if (refreshRequired) {
+      SpotifyApi.refreshToken(authCredentials?.refreshToken)
+        .then(({ accessToken, expiresIn }) => {
+          const credentials = {
+            accessToken,
+            expiresAt: new Date().getTime() + expiresIn * 1000
+          };
+
+          setAuthCredentials(credentials);
+          SpotifyApi.saveAuthCredentials(credentials);
+        })
+        .catch(() => {
+          setError("Oops! Something went wrong.");
+          setAuthCredentials(null);
+          SpotifyApi.removeAuthCredentials();
+        })
+        .finally(() => {
+          setLoading(false);
+          setRefreshRequired(false);
+        });
+    }
+  }, [refreshRequired, authCredentials]);
 
   return {
-    authorized: !!accessToken,
-    data,
+    authorized: !!authCredentials?.accessToken,
+    profileData,
     loading,
     error
   };

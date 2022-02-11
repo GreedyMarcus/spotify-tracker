@@ -1,10 +1,21 @@
-export type RequestAccessTokenResponse = {
+export type AuthCredentials = {
+  accessToken: string;
+  refreshToken?: string;
+  expiresAt: number;
+};
+
+export type LoginResponse = {
   accessToken: string;
   refreshToken: string;
   expiresIn: number;
 };
 
-export type GetProfileResponse = {
+export type RefreshTokenResponse = {
+  accessToken: string;
+  expiresIn: number;
+};
+
+export type ProfileResponse = {
   profile: Profile;
   artists: Artist[];
   tracks: Track[];
